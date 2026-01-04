@@ -39,6 +39,7 @@ export default function Wheel({ names = [], startSignal, onWinner, onSelected }:
   const [isAnimating, setIsAnimating] = useState(false)
   const [confetti, setConfetti] = useState(false)
   const [rotation, setRotation] = useState(0)
+  const [wheelSize, setWheelSize] = useState(460)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const lastStartSignalRef = useRef<number>(0)
   const onWinnerRef = useRef(onWinner)
@@ -58,6 +59,18 @@ export default function Wheel({ names = [], startSignal, onWinner, onSelected }:
         spinAudioRef.current = null
       }
     }
+  }, [])
+
+  useEffect(() => {
+    function handleResize() {
+      const width = window.innerWidth || 0
+      const target = Math.min(460, Math.max(260, Math.floor(width * 0.9)))
+      setWheelSize(target)
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   // Keep onWinner ref in sync
@@ -169,8 +182,6 @@ export default function Wheel({ names = [], startSignal, onWinner, onSelected }:
     return `${colors[i]} ${start}deg ${end}deg`
   })
   const gradient = `conic-gradient(${gradParts.join(', ')})`
-
-  const wheelSize = 460
 
   return (
     <div style={{ marginTop: 12 }} ref={containerRef}>
@@ -443,7 +454,7 @@ export default function Wheel({ names = [], startSignal, onWinner, onSelected }:
           </div>
         </div>
       </div>
-      {confetti && <Confetti />}
+      {confetti && <Confetti style={{ pointerEvents: 'none', zIndex: 5 }} />}
     </div>
   )
 }

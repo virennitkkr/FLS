@@ -174,7 +174,7 @@ export default function App() {
   }, [mode, startPlay, resetChosenOnce])
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: 'linear-gradient(135deg, #0a0606 0%, #1a0a0a 25%, #2d1515 50%, #4a1a1a 75%, #6b2020 100%)', position: 'relative', overflow: 'hidden' }}>
+    <div className="app-shell" style={{ display: 'flex', height: '100vh', background: 'linear-gradient(135deg, #0a0606 0%, #1a0a0a 25%, #2d1515 50%, #4a1a1a 75%, #6b2020 100%)', position: 'relative', overflow: 'hidden' }}>
       {/* Cosmic dust effect */}
       <div style={{
         position: 'absolute',
@@ -219,14 +219,15 @@ export default function App() {
       
       {/* Left Sidebar - Winners */}
       <WinnersSidebar
+        className="sidebar"
         winners={mode === 'points' ? winners : chosenHistory.map((n, idx) => ({ name: n, points: 0, count: idx + 1 }))}
         showPoints={mode === 'points'}
       />
 
       {/* Main Content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+      <div className="main-content" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 220px', gap: 20, padding: 20, flex: 1 }}>
+          <div className="grid-panels" style={{ display: 'grid', gridTemplateColumns: '1.2fr 220px', gap: 20, padding: 20, flex: 1 }}>
             {/* Wheel Section (middle) - header moved here and centered */}
           <div
             style={{

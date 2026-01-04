@@ -9,21 +9,23 @@ type Winner = {
 type Props = {
   winners: Winner[]
   showPoints?: boolean
+  className?: string
 }
 
-export default function WinnersSidebar({ winners, showPoints = true }: Props) {
+export default function WinnersSidebar({ winners, showPoints = true, className }: Props) {
   const sortedWinners = showPoints ? [...winners].sort((a, b) => b.points - a.points) : winners
 
   return (
     <div
+      className={className}
       style={{
-        width: 220,
+        width: 'var(--sidebar-width, 220px)',
         background: 'rgba(0, 0, 0, 0.6)',
         backdropFilter: 'blur(10px)',
         borderRight: '1px solid rgba(255, 215, 0, 0.2)',
         padding: 20,
         overflowY: 'auto',
-        maxHeight: '100vh',
+        maxHeight: 'var(--sidebar-max-height, 100vh)',
         boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
       }}
     >
