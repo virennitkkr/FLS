@@ -54,57 +54,17 @@ function showNotification(message) {
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        background: linear-gradient(135deg, #4a90e2, #50c878);
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1001;
-        animation: slideIn 0.3s ease;
-        max-width: 300px;
-    `;
     
     document.body.appendChild(notification);
     
     // Remove notification after 3 seconds
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
+        notification.classList.add('hide');
         setTimeout(() => {
             notification.remove();
         }, 300);
     }, 3000);
 }
-
-// Add animation styles
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
 
 // Track user progress (simple implementation)
 let userProgress = {
@@ -131,7 +91,7 @@ userProgress.visits++;
 userProgress.lastVisit = new Date().toISOString();
 saveProgress();
 
-// Show welcome message for returning users
+// Welcome back! This is visit #${userProgress.visits}
 if (userProgress.visits > 1) {
     setTimeout(() => {
         showNotification(`Welcome back! This is visit #${userProgress.visits} 🎉`);
